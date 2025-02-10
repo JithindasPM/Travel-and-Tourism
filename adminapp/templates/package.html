@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #4895ef;
+            --text-color: #2b2d42;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --sidebar-width: 250px;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            display: flex;
+        }
+
+        /* Fixed Sidebar Styles */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--primary-color);
+            padding: 20px;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-menu {
+            margin-top: 30px;
+        }
+
+        .menu-item {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+
+        .menu-item:hover {
+            background: var(--secondary-color);
+            transform: translateX(5px);
+        }
+
+        .menu-item i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 30px;
+            background: var(--bg-color);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .menu-a {
+            text-decoration: none;
+            color: white;
+        }
+
+        /* Compact Form Styles */
+        .fom {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: none;
+            max-width: 100%;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .form-full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .fom label {
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .fom input,
+        .fom select {
+            height: 36px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .fom textarea {
+            min-height: 80px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            width: 100%;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        /* Image preview adjustments */
+        .image-preview {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            min-height: 200px;
+            background-color: #f8f9fa;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+
+        .table {
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+
+        .table thead th {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-weight: 500;
+        }
+
+        .table tbody td {
+            padding: 12px;
+            vertical-align: middle;
+        }
+
+        .btn {
+            border-radius: 6px;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Make description textarea smaller */
+        .fom textarea {
+            min-height: 60px;
+            /* Reduced from 80px */
+            max-height: 100px;
+            /* Added max height */
+            padding: 6px 12px;
+            /* Slightly reduced padding */
+            font-size: 0.85rem;
+            /* Slightly smaller font */
+        }
+
+        /* Make sport column in table more compact */
+        .table td:first-child {
+            /* Targets the first column (Spot) */
+            max-width: 120px;
+            /* Limit maximum width */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.9rem;
+            /* Slightly smaller font */
+        }
+
+        /* Optional: Add title attribute to show full text on hover */
+        .table td:first-child {
+            cursor: pointer;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 991px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .col-lg-8 {
+                margin-bottom: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+
+            .menu-text {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 70px;
+                padding: 20px;
+            }
+
+            .fom {
+                padding: 15px;
+            }
+
+            .image-preview {
+                min-height: 150px;
+            }
+        }
+
+        /* Rest of the previous styles remain the same */
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar remains the same -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <a class="menu-a" href="{% url 'Homepage' %}">
+                    <h2>TravelAdmin</h2>
+                </a>
+            </div>
+            <div class="sidebar-menu">
+                <a class="menu-a" href="{% url 'dashboard' %}">
+                    <div class="menu-item">
+                        <i class="fas fa-home"></i>
+                        <span class="menu-text">Home</span>
+                    </div>
+                </a>
+                <a class="menu-a" href="{% url 'state_add' %}">
+                    <div class="menu-item">
+                        <i class="fas fa-suitcase"></i>
+                        <span class="menu-text">States</span>
+                    </div>
+                </a>
+                <a class="menu-a" href="{% url 'destination' %}">
+                    <div class="menu-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span class="menu-text">Destinations</span>
+                    </div>
+                </a>
+                <a class="menu-a" href="{% url 'package' %}">
+                    <div class="menu-item active">
+                        <i class="bi bi-subtract"></i>
+                        <span class="menu-text">Packages</span>
+                    </div>
+                </a>
+                <div class="menu-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span class="menu-text">Analytics</span>
+                </div>
+                <div class="menu-item">
+                    <i class="fas fa-cog"></i>
+                    <span class="menu-text">Settings</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modified Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1 class="mb-0">Travel Packages</h1>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <form action="" method="post" class="fom" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="id_destination">Destination</label>
+                                    {{ form.destination }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_spot">Spot</label>
+                                    {{ form.spot }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_duration">Duration</label>
+                                    {{ form.duration }}
+                                </div>
+                                <div class="form-group">
+                                    <label for="id_amount">Amount</label>
+                                    {{ form.amount }}
+                                </div>
+                                <div class="form-group form-full-width">
+                                    <label for="id_description">Description</label>
+                                    {{ form.description }}
+                                </div>
+                                <div class="form-group form-full-width">
+                                    <label for="id_image">Image</label>
+                                    {{ form.Image }}
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary mt-2">Save Package</button>
+                        </form>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="image-preview">
+                            {% if data.Image %}
+                            <div
+                                style="height: 100%; background-image: url('{{ data.Image.url }}'); background-size: cover; background-position: center;">
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container mt-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Spot</th>
+                                <th>Destination</th>
+                                <th>Duration</th>
+                                <th>Amount</th>
+                                <th>Update</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in datas %}
+                            <tr>
+                                <td>{{ i.spot }}</td>
+                                <td>{{ i.destination }}</td>
+                                <td>{{ i.duration }}</td>
+                                <td class="price-cell">₹{{ i.amount }}</td>
+                                <td>
+                                    <a href="{% url 'package_update' i.id %}" class="btn btn-warning btn-sm">Update</a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'package_delete' i.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.js"></script>
+    <script>
+        // Add active class to menu items
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                menuItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+        document.querySelectorAll('.table td:first-child').forEach(cell => {
+            if (cell.textContent.length > 0) {
+                cell.setAttribute('title', cell.textContent);
+            }
+        });
+    </script>
+
+</body>
+
+</html>

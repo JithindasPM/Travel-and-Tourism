@@ -1,0 +1,287 @@
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- title -->
+    <title>Adventure</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'load/assets/img/favicon.png' %}">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <!-- fontawesome -->
+
+
+    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
+
+
+    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .alert-container {
+            position: fixed;
+            top: -100px;
+            /* Initially off-screen */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 100%;
+            max-width: 400px;
+            /* Adjust width as needed */
+            text-align: center;
+            animation: slideDown 0.5s forwards;
+        }
+
+        @keyframes slideDown {
+            0% {
+                top: -100px;
+                /* Off-screen */
+            }
+
+            100% {
+                top: 100px;
+                /* 100px down from top */
+            }
+        }
+
+        .alert {
+            position: relative;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+        }
+
+        .alert-success {
+            color: black;
+            background-color: white;
+            border: 1px solid green !important;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .alert-warning {
+            color: black;
+            background-color: white;
+            border: 1px solid #F28123 !important;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .alert-error {
+            color: black;
+            background-color: white;
+            border: 1px solid #F28123 !important;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .alert-info {
+            color: black;
+            background-color: white;
+            border: 1px solid blue !important;
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <br><br><br>
+    <div class="container ">
+        <div class="card mt-5 pt-1">
+            <div class="card-body">
+                <div class="container mb-5 mt-3">
+                    <div class="row d-flex align-items-baseline">
+                        <div class="col-xl-9">
+                            <a href="{% url 'Homepage' %}">
+                                <button class="btn btn-warning ml-left">Home</button>
+                            </a>
+                        </div>
+                        <hr>
+                        <div>
+
+
+                            <button class="btn btn-warning ml-left" id="printInvoice">Print</button>
+                        </div>
+                    </div>
+                    <br><br>
+
+                    <div class="container">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
+                                <p class="pt-0">
+                                <h3><span style="color: rgb(21, 16, 7); font-weight: bold"> Tour Package Invoice</span>
+                                </h3>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xl-8">
+                                <ul class="list-unstyled">
+
+                                    <li class="text-muted">
+                                        <h4>Name: {{ detail.U_Name }}</h4>
+                                    </li>
+                                    <li class="text-muted">
+                                        <h4>State: {{ detail.U_State }}</h4>
+                                    </li>
+                                    <li class="text-muted">
+                                        <h4>Street: {{ detail.U_Street }}</h4>
+                                    </li>
+                                    <li class="text-muted">
+                                        <h4>Town: {{ detail.U_Town }}</h4>
+                                    </li>
+                                    <li class="text-muted">
+                                        <h4>Phone: {{ detail.U_Phone}}</h4>
+                                    </li>
+                                    <li class="text-muted">
+                                        <h4>Email: {{ detail.U_Email}}</h4>
+                                    </li>
+                                    <li class="text-muted">
+                                        <h4>SPOT: {{ detail.package.spot}}</h4>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-striped table-borderless " style="text-align: center;">
+                                    <thead style="background-color: #1639d3;" class="text-white">
+                                        <tr>
+                                            <th>Spot</th>
+                                            <th>Image</th>
+                                            <th>Booking Date</th>
+                                            <th>Duration</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="text-center ">
+                                            <td style="text-align: center; padding-left: 55px;">{{ detail.package.spot
+                                                }}</td>
+                                            <td>
+                                                <img src="{{ detail.package.Image.url }}"
+                                                    style="max-height: 100px; max-width: 100px;padding-left: 35px;"
+                                                    alt="Place Image" />
+                                            </td>
+                                            <td style="text-align: center;padding-left: 55px;">{{ detail.date }}</td>
+                                            <td style="padding-left: 50px;">{{ detail.package.duration }}</td>
+                                            <td>₹ {{ detail.package.amount }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="row">
+                        <div class="col-xl-12 justify-content-center d-flex">
+                            <p><span style="color: orange; font-weight: bold">Thank you for Booking.</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="alert-container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {% if message.tags == 'error' %}
+            <img src="{% static 'Web/assets/img/error.png' %}" alt="Error Icon" style="margin-right:10px;" width="27px"
+                height="27px"> <!-- Replace path/to/error-image.jpg with the path to your error image -->
+            {{ message }}
+
+            {% endif %}
+            {% if message.tags == 'success' %}
+            <img src="{% static 'Web/assets/img/green_tick.jpg' %}" alt="Error Icon" width="35px" height="33px">
+            {{ message }}
+
+            {% endif %}
+            {% if message.tags == 'warning' %}
+            <img src="{% static 'Web/assets/img/warningicon.png' %}" style="margin-top:-7px !important;"
+                alt="Error Icon" width="30px" height="28px">
+            {{ message }}
+
+            {% endif %}
+            {% if message.tags == 'info' %}
+            <img src="{% static 'Web/assets/img/info-icon.webp' %}" style="margin-right:7px !important;"
+                alt="Error Icon" width="28px" height="32px">
+            {{ message }}
+
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Hide alerts after 5 seconds
+            setTimeout(function () {
+                $('.alert-container').fadeOut('medium');
+            }, 5000);
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+        document.getElementById("printInvoice").addEventListener("click", function () {
+            window.print();
+        });
+    </script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'js/aos.js' %}"></script>
+    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
+    <script src="{% static 'js/scrollax.min.js' %}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="{% static 'js/google-map.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+</body>
+
+</html>
