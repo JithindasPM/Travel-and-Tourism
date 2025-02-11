@@ -132,9 +132,6 @@ class Pakage_Delete_View(View):
         Package.objects.get(id=id).delete()
         return redirect('package')
 
-class hai(View):
-    def get(self,request,*args,**kwargs):
-        return render(request,'hai.html')
 
 class Admin_Registration_View(View):
     def get(self, request, *args, **kwargs):

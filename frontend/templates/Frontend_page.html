@@ -294,7 +294,7 @@
 			<div class="project">
 				<div class="img">
 					
-					<a href="{% url 'Singlepage' i.id %}"><img src="{{i.Image.url}}" class="img-fluid" alt="Colorlib Template"></a>
+					<a href="{% url 'Singlepage' i.id %}"><img style="height: 230px;" src="{{i.Image.url}}" class="img-fluid" alt="Colorlib Template"></a>
 				</div>
 				<div class="text">
 					
@@ -570,6 +570,7 @@
     					<div class="col-md-7 d-flex ftco-animate">
     						<div class="img align-self-stretch" style="background-image: url({% static 'images/room-1.jpg' %});"></div>
     					</div>
+						
     					<div class="col-md-5 ftco-animate">
     						<div class="text py-5">
     							<h3><a href="hotel-single.html">Classic Balcony Room</a></h3>
@@ -818,7 +819,7 @@
 		{% for i in Y %}
           <div class="col-md-6 col-lg-6 d-flex ftco-animate">
           	<div class="blog-entry justify-content-end">
-              <img src="{{i.package.Image.url}}" class="block-20" style="border-radious:0.75rem;" >
+              <img src="{{i.package.Image.url}}" class="block-20" style="border-radius: 0.75rem;" >
               
               <div class="text float-right d-block">
               	<div class="d-flex align-items-center pt-2 mb-4 topp">
@@ -833,7 +834,9 @@
                 <h3 class="heading"><p>{{i.package.spot}}</p></h3>
                 <p>{{i.package.description}}</p>
                 <div class="d-flex align-items-center mt-4 meta">
-	                <p class="mb-0"><a href="#" class="btn btn-primary">{{i.package.amount}} </a></p>
+					<div class="d-flex justify-content-end">
+						<p style="margin-right: 20px;" class="mb-0"><a href="#" class="btn btn-primary">{{i.package.amount}} </a></p><p class="mb-0"><a href="{% url 'booking_delete' i.id %}" class="btn btn-primary"> Cancel </a></p>
+					</div>
 	                <p class="ml-auto mb-0">
 	                	<a href="#" class="mr-2">{{i.package.duaration}}</a>
 	                	{% comment %} <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a> {% endcomment %}

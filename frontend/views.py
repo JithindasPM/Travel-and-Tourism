@@ -12,12 +12,15 @@ from django.contrib.auth.models import User  # Import the User model
 from django.shortcuts import render
 from .models import User_Details
 from django.contrib.auth.decorators import login_required
+from frontend.models import Booking
+from django.views.generic import View
 
 @login_required
 def success(request,pk):
     # Filter User_Details based on the logged-in user
     detail = User_Details.objects.get(id = pk)
-    return render(request, 'success.html', {'detail': detail})
+    spot=detail.package.spot
+    return render(request, 'success.html', {'detail': detail,'spot':spot})
 
 
 # Create your views here.
@@ -27,6 +30,12 @@ def Homepage(request):
         y= User_Details.objects.filter(user=request.user)
         return render(request,"Frontend_page.html",{'x':x,'Y':y})
     return render(request,"Frontend_page.html",{'x':x})
+
+class Booking_Delete_View(View):
+    def get(self,request,*args,**Kwargs):
+        id=Kwargs.get('pk')
+        User_Details.objects.get(id=id).delete()
+        return redirect('Homepage')
 
 def Singlepage(request, id):
     y = destination.objects.filter(State=id)
@@ -125,9 +134,7 @@ def signout_view(request, *args, **kwargs):
         return redirect("Homepage")
 
 
-
-
-def User_details(request,pk):
+def User_details(request, pk):
     if request.method == "POST":
         n = request.POST.get('name')
         s = request.POST.get('state')
@@ -136,18 +143,40 @@ def User_details(request,pk):
         p = request.POST.get('phone')
         e = request.POST.get('email')
         d = request.POST.get('date')
-        hotel_obj =Hotel.objects.get(id=pk)
-        obj = User_Details.objects.create(U_Name=n,U_State=s,U_Street=st,U_Town=t,U_Phone=p,U_Email=e,package=hotel_obj.package,date=d,user=request.user,hotel=hotel_obj)
-        obj.save()
-        
-        
-        return redirect("success",pk=obj.id)
-    
-# Create Razorpay payment
-    order_currency = 'INR'
-    client = razorpay.Client(auth=('rzp_test_IzIBFTmzd3zzKk', 'mMvIdZd7a4EU1pMd9tSQEbE0'))
 
-    payment = client.order.create({'amount': int(grand_total * 1000), 'currency': "INR", 'payment_capture': '1'})
+        hotel_obj = Hotel.objects.get( id=pk)
+        
+        obj = User_Details.objects.create(
+            U_Name=n,
+            U_State=s,
+            U_Street=st,
+            U_Town=t,
+            U_Phone=p,
+            U_Email=e,
+            package=hotel_obj.package,
+            date=d,
+            user=request.user,
+            hotel=hotel_obj
+        )
+        obj.save()
+
+        Booking.objects.create(hotel=hotel_obj, user=request.user)
+
+        # Razorpay Payment Integration
+        order_currency = 'INR'
+        client = razorpay.Client(auth=('rzp_test_IzIBFTmzd3zzKk', 'mMvIdZd7a4EU1pMd9tSQEbE0'))
+
+        grand_total = hotel_obj.package.amount  # Ensure this value is fetched correctly
+
+        payment = client.order.create({
+            'amount': int(grand_total * 100),  # Convert to paise (100 paise = 1 INR)
+            'currency': order_currency,
+            'payment_capture': '1'
+        })
+
+        return redirect("success", pk=obj.id)
+
+
 
 def feedback(request):
     if request.method == "POST":

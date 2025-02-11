@@ -1,5 +1,6 @@
 from django.urls import path
 from frontend import views
+from frontend.views import Booking_Delete_View
 
 urlpatterns=[
     # path('Homepage/',views.Homepage,name="Homepage"),
@@ -15,7 +16,7 @@ urlpatterns=[
     path('logout/',views.signout_view,name="logout"),
     path('success/<int:pk>/',views.success, name="success"),
     path('feedback/',views.feedback,name="feedback"),
-
+    path('booking_delete/<int:pk>',Booking_Delete_View.as_view(),name="booking_delete"),
 
 
 ]
