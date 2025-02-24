@@ -1,150 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Form</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-<style>
-/* CSS for Login Form */
-.vh-100 {
-    height: 100vh;
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <style>
+    /* CSS for Login Form */
+    .vh-100 {
+      height: 100vh;
+    }
 
-.container {
-    padding-top: 5rem;
-    height: 100%;
-}
+    .container {
+      padding-top: 5rem;
+      height: 100%;
+    }
 
-.img-fluid {
-    max-width: 100%;
-}
+    .img-fluid {
+      max-width: 100%;
+    }
 
-.form-outline {
-    position: relative;
-}
+    .form-outline {
+      position: relative;
+    }
 
-.form-outline input {
-    width: 100%;
-    padding: 0.75rem 1rem;
-}
+    .form-outline input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+    }
 
-.form-outline label {
-    position: absolute;
-    top: 0.75rem;
-    left: 1rem;
-    transition: 0.3s;
-    pointer-events: none;
-    color: #6c757d;
-}
+    .form-outline label {
+      position: absolute;
+      top: 0.75rem;
+      left: 1rem;
+      transition: 0.3s;
+      pointer-events: none;
+      color: #6c757d;
+    }
 
-.form-outline input:focus ~ label,
-.form-outline input:valid ~ label {
-    top: -0.25rem;
-    font-size: 0.75rem;
-    color: #6c757d;
-}
+    .form-outline input:focus~label,
+    .form-outline input:valid~label {
+      top: -0.25rem;
+      font-size: 0.75rem;
+      color: #6c757d;
+    }
 
-.form-check {
-    margin-bottom: 0;
-}
-.form-a{
-  text-decoration: none;
-}
+    .form-check {
+      margin-bottom: 0;
+    }
 
-.btn-lg {
-    padding: 0.75rem 1rem;
-    font-size: 1rem;
-}
+    .form-a {
+      text-decoration: none;
+    }
 
-.divider:after,
-.divider:before {
-    content: "";
-    flex: 1;
-    height: 1px;
-    background: #eee;
-}
+    .btn-lg {
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+    }
 
-</style>
+    .divider:after,
+    .divider:before {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: #eee;
+    }
+  </style>
 </head>
-<body>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
-<section class="vh-100">
+<body>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+  <section class="vh-100">
 
     <div class="">
 
 
-       {% for message in messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>{{message}}</strong>
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-        {% endfor %}
-
-
-</div>
-
-
-  <div class="container py-5 h-100">
-    <div class="row d-flex align-items-center justify-content-center h-100">
-      <div class="col-md-8 col-lg-7 col-xl-6">
-        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-          class="img-fluid" alt="Phone image">
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
-      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-        <form action=" " method="post">
-          {% csrf_token %}
-          {{form.as_p}}
-          <button class="btn btn-warning" type="submit">Login</button>
-      </form>
-      <div class="d-flex justify-content-around align-items-center mb-4">
-        <!-- Checkbox -->
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
-          <label class="form-check-label" for="form1Example3"> Remember me </label>
+      {% endfor %}
+
+
+    </div>
+
+
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid"
+            alt="Phone image">
         </div>
-        <a class="form-a" href="#!">Forgot password?</a>
-      </div>
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+          <form action=" " method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button class="btn btn-warning" type="submit">Login</button>
+          </form>
+          <div class="d-flex justify-content-around align-items-center mb-4">
+            <a class="form-a" href="#!"></a>
+            <!-- Checkbox -->
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+              <label class="form-check-label" for="form1Example3"> Remember me </label>
+            </div>
+            
+          </div>
 
-      <div class="divider d-flex align-items-center my-4">
-        <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+          <div class="divider d-flex align-items-center my-4">
+            <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
+          </div>
+          <div>
+            <p class="mt-3">Dont have an account: <a class="form-a" href="{% url 'Signup' %}">Create an account</a></p>
+          </div>
+        </div>
       </div>
-
-      <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="#!"
-        role="button">
-        <i class="fab fa-facebook-f me-2"></i>Continue with Facebook
-      </a>
-      <a class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="#!" role="button">
-        <i class="fab fa-google me-2"></i>Continue with Google
-    </a>
-    <div>
-      <p class="mt-3">Dont have an account: <a class="form-a" href="{% url 'Signup' %}">Create an account</a></p>
     </div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<script>
+  <script>
     function togglePasswordVisibility(passwordFieldId) {
-    var passwordField = document.getElementById(passwordFieldId);
-    var icon = passwordField.nextElementSibling.querySelector('i');
+      var passwordField = document.getElementById(passwordFieldId);
+      var icon = passwordField.nextElementSibling.querySelector('i');
 
-    if (passwordField.type === 'password') {
+      if (passwordField.type === 'password') {
         passwordField.type = 'text';
         icon.classList.remove('fa-eye-slash');
         icon.classList.add('fa-eye');
-    } else {
+      } else {
         passwordField.type = 'password';
         icon.classList.remove('fa-eye');
         icon.classList.add('fa-eye-slash');
+      }
     }
-}
-</script>
+  </script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </html>

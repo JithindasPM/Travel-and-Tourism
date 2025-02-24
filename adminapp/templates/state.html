@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -101,14 +102,6 @@
             color: white;
         }
 
-        .fom {
-            background: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border: none;
-        }
-
         /* Table Styles */
         .table-container {
             background: var(--card-bg);
@@ -146,6 +139,25 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
+        .form {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-success {
+            background: #4895ef;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background: #4361ee;
+        }
+
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 70px;
@@ -169,7 +181,7 @@
             <!-- Previous sidebar content -->
             <div class="sidebar-header">
                 <a class="menu-a" href="{% url 'Homepage' %}">
-                    <h2>TravelAdmin</h2>
+                    <h2>Paradise Gateway</h2>
                 </a>
             </div>
             <div class="sidebar-menu">
@@ -198,14 +210,6 @@
                         <span class="menu-text">Packages</span>
                     </div>
                 </a>
-                <div class="menu-item">
-                    <i class="fas fa-chart-bar"></i>
-                    <span class="menu-text">Analytics</span>
-                </div>
-                <div class="menu-item">
-                    <i class="fas fa-cog"></i>
-                    <span class="menu-text">Settings</span>
-                </div>
                 <!-- Rest of the menu items -->
             </div>
         </div>
@@ -213,22 +217,35 @@
         <!-- Enhanced Main Content -->
         <div class="main-content">
             <div class="header">
-                <h1 class="mb-0">States</h1>
+                <h1 class=" text-primary fw-bold text-center"> States</h1>
             </div>
 
             <div class="container">
                 <div class="row g-4">
                     <div class="col-md-6">
-                        <form action="" method="post" class="fom" enctype="multipart/form-data">
+                        <form action="" method="post" class="form p-4 shadow-lg rounded bg-light"
+                            enctype="multipart/form-data">
                             {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary">Save</button>
+
+                            <div class="mb-3">
+                                <label for="id_Name" class="form-label fw-bold">State Name</label>
+                                {{ form.Name }}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_Image" class="form-label fw-bold">Upload Image</label>
+                                {{ form.Image }}
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100">Save</button>
                         </form>
                     </div>
                     <div class="col-md-6">
                         <div class="image-preview">
                             {% if data.Image %}
-                            <div class="p-2" style="height: 250px; background-image: url('{{ data.Image.url }}'); background-size: cover; background-position: center;"></div>
+                            <div class="p-2"
+                                style="height: 250px; background-image: url('{{ data.Image.url }}'); background-size: cover; background-position: center;">
+                            </div>
                             {% else %}
                             <div class="p-2" style="height: 250px; background-color: #f8f9fa;"></div>
                             {% endif %}
@@ -276,4 +293,5 @@
         });
     </script>
 </body>
+
 </html>

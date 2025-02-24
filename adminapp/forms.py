@@ -11,10 +11,35 @@ class State_Form(forms.ModelForm):
         model=state
         fields='__all__'
 
+        widgets = {
+            'Name': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'placeholder': 'Enter State Name'
+            }),
+            'Image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            }),
+        }
+        labels = {
+            'Name': 'State Name',
+            'Image': 'Upload Image'
+        }
+
+
 class Destination_Form(forms.ModelForm):
     class Meta:
         model=destination
         fields=['State','Name','Image']
+        widgets = {
+            'State': forms.Select(attrs={'class': 'form-select'}),
+            'Name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Destination Name'}),
+            'Image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'State': 'Select State',
+            'Name': 'Destination Name',
+            'Image': 'Upload Image',
+        }
 
 class Package_Form(forms.ModelForm):
     class Meta:
@@ -23,7 +48,7 @@ class Package_Form(forms.ModelForm):
 
 class Admin_Registration_Form(UserCreationForm):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
+    # password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
 
     class Meta:
         model = User

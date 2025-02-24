@@ -118,8 +118,7 @@ class SignInView(View):
             psw = form.cleaned_data.get('password')
             usr = authenticate(request, username=uname, password=psw)
             if usr:
-                login(request, usr)  
-                messages.success(request, "Login successfully")
+                login(request, usr) 
 
                 if usr.is_superuser:
                     return redirect("dashboard")
@@ -128,11 +127,15 @@ class SignInView(View):
         messages.error(request, "Invalid Userlogin")
         return render(request, 'userlogin.html', {"form": form, "messages": messages.get_messages(request)})
 
+
     
 def signout_view(request, *args, **kwargs):
         logout(request)
         return redirect("Homepage")
 
+
+from django.core.mail import send_mail
+from django.conf import settings
 
 def User_details(request, pk):
     if request.method == "POST":
@@ -160,6 +163,13 @@ def User_details(request, pk):
         )
         obj.save()
 
+        subject = 'Welcome to Paradise'
+        message =f"Dear {request.user.username},\n\n" f"Congratulations! Your booking at {hotel_obj.hotel_name} has been successfully confirmed. We are delighted to welcome you on {d} and ensure you have an unforgettable experience. \n We are delighted to welcome you on {d} and ensure you have an unforgettable experience. \n We look forward to serving you at {hotel_obj.hotel_name} and making your trip truly memorable! 🌴✨"
+
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = [e,]
+        send_mail(subject, message, email_from, recipient_list)
+
         Booking.objects.create(hotel=hotel_obj, user=request.user)
 
         # Razorpay Payment Integration
@@ -175,8 +185,6 @@ def User_details(request, pk):
         })
 
         return redirect("success", pk=obj.id)
-
-
 
 def feedback(request):
     if request.method == "POST":

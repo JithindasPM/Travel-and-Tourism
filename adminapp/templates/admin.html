@@ -226,7 +226,7 @@
         <div class="sidebar">
             <div class="sidebar-header">
                 <a class="menu-a" href="{% url 'Homepage' %}">
-                    <h2>TravelAdmin</h2>
+                    <h2>Paradise Gateway</h2>
                 </a>
             </div>
             <div class="sidebar-menu">
@@ -254,18 +254,9 @@
                         <span class="menu-text">Packages</span>
                     </div>
                 </a>
-                <div class="menu-item">
-                    <i class="fas fa-chart-bar"></i>
-                    <span class="menu-text">Analytics</span>
-                </div>
-                <div class="menu-item">
-                    <i class="fas fa-cog"></i>
-                    <span class="menu-text">Settings</span>
-                </div>
             </div>
         </div>
-
-        {% block content %}
+                {% block content %}
 
         <!-- Main Content -->
         <div class="main-content">
@@ -286,7 +277,7 @@
                             <i class="fas fa-suitcase"></i>
                         </div>
                     </div>
-                    <div class="stat-value">1,234</div>
+                    <div class="stat-value">{{total_booking}}</div>
                     <div class="stat-label">Total Bookings</div>
                 </div>
                 <div class="stat-card">
@@ -295,7 +286,7 @@
                             <i class="fas fa-dollar-sign"></i>
                         </div>
                     </div>
-                    <div class="stat-value">$89,432</div>
+                    <div class="stat-value">${{total_amount}}</div>
                     <div class="stat-label">Revenue</div>
                 </div>
                 <div class="stat-card">
@@ -304,7 +295,7 @@
                             <i class="fas fa-users"></i>
                         </div>
                     </div>
-                    <div class="stat-value">892</div>
+                    <div class="stat-value">{{users}}</div>
                     <div class="stat-label">Active Users</div>
                 </div>
                 <div class="stat-card">
@@ -313,7 +304,7 @@
                             <i class="fas fa-map-marked-alt"></i>
                         </div>
                     </div>
-                    <div class="stat-value">46</div>
+                    <div class="stat-value">{{destinations}}</div>
                     <div class="stat-label">Destinations</div>
                 </div>
             </div>
@@ -329,16 +320,16 @@
                             <th>Destination</th>
                             <th>Date</th>
                             <th>Amount</th>
-                            <th>Status</th>
                         </tr>
                     </thead>
+                    {% for i in admin_bookings %}
                         <tr>
-                            <td>Mike Johnson</td>
-                            <td>Rajasthan</td>
-                            <td>2025-02-08</td>
-                            <td>$1,500</td>
-                            <td><span class="status-badge status-confirmed">Confirmed</span></td>
+                            <td>{{i.U_Name}}</td>
+                            <td>{{i.package}}</td>
+                            <td>{{i.date}}</td>
+                            <td>{{i.package.amount}}</td>
                         </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

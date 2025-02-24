@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -161,6 +162,22 @@
             background-color: #f8f9fa;
         }
 
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-success {
+            background: #4895ef;
+            border: none;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .btn-success:hover {
+            background: #4361ee;
+        }
+
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 70px;
@@ -183,7 +200,7 @@
         <div class="sidebar">
             <div class="sidebar-header">
                 <a class="menu-a" href="{% url 'Homepage' %}">
-                    <h2>TravelAdmin</h2>
+                    <h2>Paradise Gateway</h2>
                 </a>
             </div>
             <div class="sidebar-menu">
@@ -211,36 +228,50 @@
                         <span class="menu-text">Packages</span>
                     </div>
                 </a>
-                <div class="menu-item">
-                    <i class="fas fa-chart-bar"></i>
-                    <span class="menu-text">Analytics</span>
-                </div>
-                <div class="menu-item">
-                    <i class="fas fa-cog"></i>
-                    <span class="menu-text">Settings</span>
-                </div>
             </div>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
             <div class="header">
-                <h1 class="mb-0">Destinations</h1>
+                <!-- <h1 class="mb-0">Destinations</h1> -->
+                <h1 class="mb-4 text-primary fw-bold text-center"> Top Destinations </h1>
             </div>
 
             <div class="container">
                 <div class="row g-4">
-                    <div class="col-md-6">
-                        <form action="" method="post" class="fom" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            {{ form.as_p }}
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </form>
+                    <div class="col-md-6 mx-auto">
+                        <div class="card shadow-lg p-4 bg-light">
+                            <h3 class="text-center mb-3 text-primary">Add Destination</h3>
+                            <form action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{{ form.State.label }}</label>
+                                    {{ form.State }}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{{ form.Name.label }}</label>
+                                    {{ form.Name }}
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{{ form.Image.label }}</label>
+                                    {{ form.Image }}
+                                </div>
+
+                                <button type="submit" class="btn btn-success w-100">Save</button>
+                            </form>
+                        </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="image-preview">
                             {% if data.Image %}
-                            <div class="p-2" style="height: 100%; background-image: url('{{ data.Image.url }}'); background-size: cover; background-position: center;"></div>
+                            <div class="p-2"
+                                style="height: 100%; background-image: url('{{ data.Image.url }}'); background-size: cover; background-position: center;">
+                            </div>
                             {% endif %}
                         </div>
                     </div>
@@ -262,10 +293,12 @@
                                 <td>{{ i.Name }}</td>
                                 <td>{{ i.State }}</td>
                                 <td>
-                                    <a href="{% url 'destination_update' i.id %}" class="btn btn-warning btn-sm">Update</a>
+                                    <a href="{% url 'destination_update' i.id %}"
+                                        class="btn btn-warning btn-sm">Update</a>
                                 </td>
                                 <td>
-                                    <a href="{% url 'destination_delete' i.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="{% url 'destination_delete' i.id %}"
+                                        class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -288,4 +321,5 @@
         });
     </script>
 </body>
+
 </html>
