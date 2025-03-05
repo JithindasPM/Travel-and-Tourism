@@ -12,6 +12,12 @@ from adminapp.views import Package_Add_View
 from adminapp.views import Package_Update_View
 from adminapp.views import Pakage_Delete_View
 from adminapp.views import Admin_Registration_View
+from adminapp.views import Package_Details_View
+from adminapp.views import Hotel_Add_View
+from adminapp.views import Hotel_Update_View
+from adminapp.views import Hotel_Delete_View
+from adminapp.views import Hotel_Details_View
+
 
 
 urlpatterns=[
@@ -27,5 +33,11 @@ urlpatterns=[
     path('package_update/<int:pk>',Package_Update_View.as_view(),name="package_update"),
     path('package_delete/<int:pk>',Pakage_Delete_View.as_view(),name="package_delete"),
     path('admin_registration/',Admin_Registration_View.as_view(),name="admin_registration"),
+    path('package_details/<int:pk>',Package_Details_View.as_view(),name="package_details"),
+    path('hotel/',Hotel_Add_View.as_view(),name="hotel"),
+    path('hotel_update/<int:pk>',Hotel_Update_View.as_view(),name="hotel_update"),
+    path('hotel_delete/<int:pk>',Hotel_Delete_View.as_view(),name="hotel_delete"),
+    path('hotel_details/<int:pk>',Hotel_Details_View.as_view(),name="hotel_details"),
+    
 
 ]

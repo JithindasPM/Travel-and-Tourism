@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -64,7 +63,7 @@
 	    </div>
 	  </nav>
 	  
-	  <section class="hero-wrap hero-wrap-2" style="background-image: url({{ bg_img.url }});" data-stellar-background-ratio="0.5">
+	  <section class="hero-wrap hero-wrap-2" style="background-image: url('{{ data.Image.url }}');" data-stellar-background-ratio="0.5">
 		<div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text align-items-end justify-content-start">
@@ -78,51 +77,23 @@
 
     <section class="ftco-section">
         <div class="container">
-            <div class="row"><!-- Display hotels -->
-        
-                <!-- Display packages -->
-               
-                    <div class="package-item">
-                        <a href="{% url 'package_details' pkg.id %}"><img height="500px" src="{{ pkg.Image.url }}" alt="{{ pkg.spot }}"></a>
-                        <div class="d-flex mt-3">
-                          <h3>{{ pkg.spot }}</h3>
-                        </div>
-                        
-                        <span class="price per-price">₹ {{ pkg.amount }}</span>
+            <div class="row">
+                <div class="col">
+                    <img height="400px" width="600px" src="{{ data.Image.url }}">
+                </div>
+                <div class="col">
+                    <p>{{data.destination}}</p>
 
-                        <p>{{ pkg.description }}</p>
-                        <!-- Add a link to view the package details -->
-                    </div>
-             
-                {% for w in a %}
-                
-                <div class="col-md-6">
-                  <h1>HOTEL</h1>
+                    <p>{{data.spot}}</p>
 
-                  <div class="hotel-item">
-                      <!-- <input type="radio" name="selected_hotel" value="{{ w.id }}"> -->
-                      <a href="{% url 'Checkout_page' pkg.id %}?hotel_id={{ w.id }}">
-                        {% if w.hotel_image %}
-                      <img style="height: 300px;" src="{{ w.hotel_image.url }}" alt="{{ w.hotel_name }}" class="img align-self-stretch">
-                        {% else %}
-                      <img src="" alt="{{ w.hotel_name }}" class="img align-self-stretch">
-                        {% endif %}
-                      </a>
-                  </div>
-                 
-                  <div class="hotel-details">
-                      <h2 class="text-center mt-3"><a href="{% url 'hotel_details' w.id %}">{{ w.hotel_name }}</a></h2>
-                      <!-- <p>{{ w.hotel_description }}</p><br><br> -->
-                  </div>
-              </div>
-              
-                {% endfor %}
-               
+                    <p>{{data.description}}</p>
+                    <p>{{data.duration}}</p>
+                    <p>{{data.amount}}</p>
+                    <a class="btn btn-dark" onclick="window.history.back();" href="">Back</a>
+
+                </div>
             </div>
-            <p>
-             
-          </p> 
-                   </div>
+        </div>
     </section>
     
 

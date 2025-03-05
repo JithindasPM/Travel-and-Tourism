@@ -102,81 +102,31 @@
             color: white;
         }
 
-        /* Compact Form Styles */
         .fom {
             background: var(--card-bg);
             border-radius: 12px;
-            padding: 20px;
+            padding: 30px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border: none;
-            max-width: 100%;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .form-full-width {
-            grid-column: 1 / -1;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .fom label {
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--text-color);
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .fom input,
-        .fom select {
-            height: 36px;
-            padding: 6px 12px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            width: 100%;
-            font-size: 0.9rem;
-        }
-
-        .fom textarea {
-            min-height: 80px;
-            padding: 8px 12px;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            width: 100%;
-            font-size: 0.9rem;
-            resize: vertical;
-        }
-
-        /* Image preview adjustments */
-        .image-preview {
+        /* Form and Table Styles */
+        .form-container {
+            background: var(--card-bg);
             border-radius: 12px;
-            overflow: hidden;
+            margin-bottom: 30px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            height: 100%;
-            min-height: 200px;
-            background-color: #f8f9fa;
         }
 
-        /* Table Styles */
         .table-container {
             background: var(--card-bg);
             border-radius: 12px;
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
-            overflow-x: auto;
         }
 
         .table {
             margin-bottom: 0;
-            white-space: nowrap;
         }
 
         .table thead th {
@@ -184,7 +134,6 @@
             color: white;
             border: none;
             padding: 12px;
-            font-weight: 500;
         }
 
         .table tbody td {
@@ -203,45 +152,31 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Make description textarea smaller */
-        .fom textarea {
-            min-height: 60px;
-            /* Reduced from 80px */
-            max-height: 100px;
-            /* Added max height */
-            padding: 6px 12px;
-            /* Slightly reduced padding */
-            font-size: 0.85rem;
-            /* Slightly smaller font */
-        }
-
-        /* Make sport column in table more compact */
-        .table td:first-child {
-            /* Targets the first column (Spot) */
-            max-width: 120px;
-            /* Limit maximum width */
-            white-space: nowrap;
+        /* Image preview container */
+        .image-preview {
+            border-radius: 12px;
             overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: 0.9rem;
-            /* Slightly smaller font */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            min-height: 250px;
+            background-color: #f8f9fa;
         }
 
-        /* Optional: Add title attribute to show full text on hover */
-        .table td:first-child {
-            cursor: pointer;
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 991px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .col-lg-8 {
-                margin-bottom: 20px;
-            }
+        .btn-success {
+            background: #4895ef;
+            border: none;
+            transition: background 0.3s ease-in-out;
         }
+
+        .btn-success:hover {
+            background: #4361ee;
+        }
+
 
         @media (max-width: 768px) {
             .sidebar {
@@ -254,25 +189,14 @@
 
             .main-content {
                 margin-left: 70px;
-                padding: 20px;
-            }
-
-            .fom {
-                padding: 15px;
-            }
-
-            .image-preview {
-                min-height: 150px;
             }
         }
-
-        /* Rest of the previous styles remain the same */
     </style>
 </head>
 
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar remains the same -->
+        <!-- Sidebar -->
         <div class="sidebar">
             <div class="sidebar-header">
                 <a class="menu-a" href="{% url 'Homepage' %}">
@@ -293,13 +217,13 @@
                     </div>
                 </a>
                 <a class="menu-a" href="{% url 'destination' %}">
-                    <div class="menu-item">
+                    <div class="menu-item active">
                         <i class="fas fa-map-marker-alt"></i>
                         <span class="menu-text">Destinations</span>
                     </div>
                 </a>
                 <a class="menu-a" href="{% url 'package' %}">
-                    <div class="menu-item active">
+                    <div class="menu-item">
                         <i class="bi bi-subtract"></i>
                         <span class="menu-text">Packages</span>
                     </div>
@@ -313,65 +237,81 @@
             </div>
         </div>
 
-        <!-- Modified Main Content -->
+        <!-- Main Content -->
         <div class="main-content">
             <div class="header">
-                <h1 class=" text-primary fw-bold text-center"> Travel Packages</h1>
-            </h1>
-
+                <!-- <h1 class="mb-0">Destinations</h1> -->
+                <h1 class="mb-4 text-primary fw-bold text-center"> Hotels </h1>
             </div>
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <form action="" method="post" class="fom" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="id_destination">Destination</label>
-                                    {{ form.destination }}
+            <div class="container">
+                <div class="row g-4">
+                    <div class="col-md-4 mx-auto">
+                        <div class="card shadow-lg p-4 bg-light">
+                            <h3 class="text-center mb-3 text-primary">Add Hotels</h3>
+                            <form action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{{ form.hotel_name.label }}</label>
+                                    {{ form.hotel_name }}
                                 </div>
-                                <div class="form-group">
-                                    <label for="id_spot">Spot</label>
-                                    {{ form.spot }}
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{{ form.package.label }}</label>
+                                    {{ form.package }}
                                 </div>
-                                <div class="form-group">
-                                    <label for="id_duration">Duration</label>
-                                    {{ form.duration }}
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{{ form.hotel_description.label }}</label>
+                                    {{ form.hotel_description }}
                                 </div>
-                                <div class="form-group">
-                                    <label for="id_amount">Amount</label>
-                                    {{ form.amount }}
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{{ form.hotel_image.label }}</label>
+                                    {{ form.hotel_image }}
                                 </div>
-                                <div class="form-group form-full-width">
-                                    <label for="id_description">Description</label>
-                                    {{ form.description }}
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">{{ form.hotel_image1.label }}</label>
+                                    {{ form.hotel_image1 }}
                                 </div>
-                                <div class="form-group form-full-width">
-                                    <label for="id_image">Image</label>
-                                    {{ form.Image }}
-                                </div>
-                                <div class="form-group form-full-width">
-                                    <label for="id_image">Image</label>
-                                    {{ form.Image1 }}
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-2">Save Package</button>
-                        </form>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="image-preview">
-                            {% if data.Image %}
-                            <div
-                                style="height: 50%; background-image: url('{{ data.Image.url }}'); background-size: cover; background-position: center;">
-                            </div>
-                            {% endif %}
-                            {% if data.Image1 %}
-                            <div
-                                style="height: 50%; background-image: url('{{ data.Image1.url }}'); background-size: cover; background-position: center;">
-                            </div>
-                            {% endif %}
+
+                                <button type="submit" class="btn btn-success w-100">Save</button>
+                            </form>
                         </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="image-preview">
+                                        {% if data.hotel_image %}
+                                        <div class="p-2"
+                                            style="height: 100%; background-image: url('{{ data.hotel_image.url }}'); background-size: cover; background-position: center;">
+                                        </div>
+                                        {% else %}
+                                        <p class="text-center mt-3">No image available</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="image-preview mt-3">
+                                        {% if data.hotel_image1 %}
+                                        <div class="p-2"
+                                            style="height: 100%; background-image: url('{{ data.hotel_image1.url }}'); background-size: cover; background-position: center;">
+                                        </div>
+                                        {% else %}
+                                        <p class="text-center mt-3">No image available</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
 
@@ -379,10 +319,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Spot</th>
-                                <th>Destination</th>
-                                <th>Duration</th>
-                                <th>Amount</th>
+                                <th>Name</th>
+                                <th>State</th>
                                 <th>Update</th>
                                 <th>Delete</th>
                             </tr>
@@ -390,15 +328,15 @@
                         <tbody>
                             {% for i in datas %}
                             <tr>
-                                <td>{{ i.spot }}</td>
-                                <td>{{ i.destination }}</td>
-                                <td>{{ i.duration }}</td>
-                                <td class="price-cell">₹{{ i.amount }}</td>
+                                <td>{{ i.hotel_name }}</td>
+                                <td>{{ i.hotel_description }}</td>
                                 <td>
-                                    <a href="{% url 'package_update' i.id %}" class="btn btn-warning btn-sm">Update</a>
+                                    <a href="{% url 'hotel_update' i.id %}"
+                                        class="btn btn-warning btn-sm">Update</a>
                                 </td>
                                 <td>
-                                    <a href="{% url 'package_delete' i.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="{% url 'hotel_delete' i.id %}"
+                                        class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
                             {% endfor %}
@@ -419,13 +357,7 @@
                 item.classList.add('active');
             });
         });
-        document.querySelectorAll('.table td:first-child').forEach(cell => {
-            if (cell.textContent.length > 0) {
-                cell.setAttribute('title', cell.textContent);
-            }
-        });
     </script>
-
 </body>
 
 </html>

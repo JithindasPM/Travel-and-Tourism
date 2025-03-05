@@ -16,6 +16,7 @@ from adminapp.forms import State_Form
 from adminapp.forms import Destination_Form
 from adminapp.forms import Package_Form
 from adminapp.forms import Admin_Registration_Form
+from adminapp.forms import Hotel_Form
 
 # Create your views here.
 
@@ -162,10 +163,54 @@ class Admin_Registration_View(View):
         messages.error(request, "Please enter correct details.")
         return render(request, "admin_form.html", {"form": form})
     
-
-
-
+class Package_Details_View(View):
+    def get(self,request,*args,**kwargs):
+        id=kwargs.get('pk')
+        data=Package.objects.get(id=id)
+        return render(request,'package_detail.html',{'data':data})
     
+
+
+class Hotel_Add_View(View):
+    def get(self,request,*args,**kwargs):
+        form=Hotel_Form()
+        datas=Hotel.objects.all()
+        return render(request,'hotel.html',{'form':form,'datas':datas})
+    def post(self,request,*args,**kwargs):
+        form=Hotel_Form(request.POST,request.FILES)
+        if form.is_valid():
+            Hotel.objects.create(**form.cleaned_data,user=request.user)
+        datas=Hotel.objects.all()
+        form=Hotel_Form()
+        return render(request,'hotel.html',{'form':form,'datas':datas})
+
+class Hotel_Update_View(View):
+    def get(self,request,*args,**kwargs):
+        id=kwargs.get('pk')
+        data=Hotel.objects.get(id=id)
+        form=Hotel_Form(instance=data)
+        datas=Hotel.objects.all()
+        return render(request,'hotel.html',{'form':form,'datas':datas,'data':data})
+
+    def post(self,request,*args,**kwargs):
+        id=kwargs.get('pk')
+        data=Hotel.objects.get(id=id)
+        form=Hotel_Form(request.POST,request.FILES,instance=data)
+        if form.is_valid():
+            form.save()
+        return redirect('hotel')
+
+class Hotel_Delete_View(View):
+    def get(self,request,*args,**kwargs):
+        id=kwargs.get('pk')
+        Hotel.objects.get(id=id).delete()
+        return redirect('hotel')
+
+class Hotel_Details_View(View):
+    def get(self,request,*args,**kwargs):
+        id=kwargs.get('pk')
+        data=Hotel.objects.get(id=id)
+        return render(request,'hotel_detail.html',{'data':data})
 
 
     
