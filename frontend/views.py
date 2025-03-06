@@ -20,7 +20,8 @@ def success(request,pk):
     # Filter User_Details based on the logged-in user
     detail = User_Details.objects.get(id = pk)
     spot=detail.package.spot
-    return render(request, 'success.html', {'detail': detail,'spot':spot})
+    booking=Booking.objects.get(user_deatil=detail.id)
+    return render(request, 'success.html', {'detail': detail,'spot':spot,'booking':booking})
 
 
 # Create your views here.
@@ -82,8 +83,8 @@ def Checkout_page(request, p_id):
         except Hotel.DoesNotExist:
             # Handle the case where the hotel with the given ID does not exist
             pass
-    print(hotel_id)
     pkg = Package.objects.get(id=p_id)
+    
     calculated_amount = pkg.amount * 100
     
     # Fetch hotels associated with the package
@@ -146,6 +147,8 @@ def User_details(request, pk):
         p = request.POST.get('phone')
         e = request.POST.get('email')
         d = request.POST.get('date')
+        travel=request.POST.get('travel_way')
+        
 
         hotel_obj = Hotel.objects.get( id=pk)
         
@@ -159,24 +162,32 @@ def User_details(request, pk):
             package=hotel_obj.package,
             date=d,
             user=request.user,
-            hotel=hotel_obj
+            hotel=hotel_obj,
+            travel_way=travel
         )
         obj.save()
 
-        subject = 'Welcome to Paradise'
+        subject = 'Welcome to Paradise Found'
         message =f"Dear {request.user.username},\n\n" f"Congratulations! Your booking at {hotel_obj.hotel_name} has been successfully confirmed. We are delighted to welcome you on {d} and ensure you have an unforgettable experience. \n We are delighted to welcome you on {d} and ensure you have an unforgettable experience. \n We look forward to serving you at {hotel_obj.hotel_name} and making your trip truly memorable! 🌴✨"
 
         email_from = settings.EMAIL_HOST_USER
         recipient_list = [e,]
         send_mail(subject, message, email_from, recipient_list)
 
-        Booking.objects.create(hotel=hotel_obj, user=request.user)
-
         # Razorpay Payment Integration
         order_currency = 'INR'
         client = razorpay.Client(auth=('rzp_test_IzIBFTmzd3zzKk', 'mMvIdZd7a4EU1pMd9tSQEbE0'))
-
+        
         grand_total = hotel_obj.package.amount  # Ensure this value is fetched correctly
+        
+        if travel == 'Bike':
+            extra_charge = 799
+            grand_total += extra_charge
+        elif travel == 'Car':
+            extra_charge = 1499
+            grand_total += extra_charge
+        user = User_Details.objects.get(id=obj.id)
+        book=Booking.objects.create(hotel=hotel_obj, user=request.user, total_amount=grand_total, package=hotel_obj.package,user_deatil=user)
 
         payment = client.order.create({
             'amount': int(grand_total * 100),  # Convert to paise (100 paise = 1 INR)

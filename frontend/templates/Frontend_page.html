@@ -3,7 +3,7 @@
 {% load static %}
 <html lang="en">
   <head>
-    <title>Ecoland - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Paradise Found</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -73,7 +73,7 @@
 	          	</div>
 		          <div class="one-forth d-flex align-items-center ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
 		          	<div class="text">
-						<h1>Paradise Gateway</h1>
+						<h1>Paradise Found</h1>
 		          		<span class="subheading pl-5">Discover India</span>
 			            <h1 class="mb-4 mt-3">Explore Your Travel Destinations like never before</h1>
 			            <p>India is one of the oldest civilizations in the world with a kaleidoscopic variety and rich cultural heritage. It has achieved all-round socio-economic progress since Independence.</p>
@@ -385,48 +385,59 @@
 
 
     <section class="ftco-section bg-light" id="booking-section">
-      <div class="container">
-        <div class="row justify-content-center mb-5 pb-5"  style="width:100%;">
-          <div class="col-md-7 heading-section text-center ftco-animate">
-            <span class="subheading">Book</span>
-            <h2 class="mb-4">My Bookings</h2>
-            {% comment %} <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p> {% endcomment %}
-          </div>
-        </div>
-        <div class="row d-flex" style="width:100%;">
-		{% for i in Y %}
-          <div class="col-md-6 col-lg-6 d-flex ftco-animate">
-          	<div class="blog-entry justify-content-end">
-              <img src="{{i.package.Image.url}}" class="block-20" style="border-radius: 0.75rem;" >
-              
-              <div class="text float-right d-block">
-              	<div class="d-flex align-items-center pt-2 mb-4 topp">
-              		<div class="one mr-2">
-              			{% comment %} <span class="day">{{i.date}}</span> {% endcomment %}
-              		</div>
-              		<div class="two">
-              			{% comment %} <span class="yr">{{i.date.year}}</span> {% endcomment %}
-              			<span class="mos">{{i.date}}</span>
-              		</div>
-              	</div>
-                <h3 class="heading"><p>{{i.package.spot}}</p></h3>
-                <p>{{i.package.description}}</p>
-                <div class="d-flex align-items-center mt-4 meta">
-					<div class="d-flex justify-content-end">
-						<p style="margin-right: 20px;" class="mb-0"><a href="#" class="btn btn-primary">{{i.package.amount}} </a></p><p class="mb-0"><a href="{% url 'booking_delete' i.id %}" class="btn btn-primary"> Cancel </a></p>
+		<div class="container">
+		  <div class="row justify-content-center mb-5 pb-5" style="width:100%;">
+			<div class="col-md-7 heading-section text-center ftco-animate">
+			  <span class="subheading">Book</span>
+			  <h2 class="mb-4">My Bookings</h2>
+			</div>
+		  </div>
+	  
+		  <div class="row d-flex" style="width:100%;">
+			{% if Y %}
+			  {% for i in Y %}
+				<div class="col-md-6 col-lg-6 d-flex ftco-animate">
+				  <div class="blog-entry justify-content-end">
+					<img src="{{ i.package.Image.url }}" class="block-20" style="border-radius: 0.75rem;">
+	  
+					<div class="text float-right d-block">
+					  <div class="d-flex align-items-center pt-2 mb-4 topp">
+						<div class="two">
+						  <span class="mos">{{ i.date }}</span>
+						</div>
+					  </div>
+					  <h3 class="heading"><p>{{ i.package.spot }}</p></h3>
+					  <p>{{ i.package.description }}</p>
+					  <div class="d-flex align-items-center mt-4 meta">
+						<div class="d-flex justify-content-end">
+						  <p style="margin-right: 20px;" class="mb-0">
+							<a href="#" class="btn btn-primary">{{ i.package.amount }}</a>
+						  </p>
+						  <p class="mb-0">
+							<a href="{% url 'booking_delete' i.id %}" class="btn btn-danger">Cancel</a>
+						  </p>
+						</div>
+						<p class="ml-auto mb-0">
+						  <a href="#" class="mr-2">{{ i.package.duaration }}</a>
+						</p>
+					  </div>
 					</div>
-	                <p class="ml-auto mb-0">
-	                	<a href="#" class="mr-2">{{i.package.duaration}}</a>
-	                	{% comment %} <a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a> {% endcomment %}
-	                </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-        </div>
-      </div>
-    </section>
+				  </div>
+				</div>
+			  {% endfor %}
+			{% else %}
+			  <div class="col-12 text-center py-5">
+				<h2 style="color: #ff4d4d;">🚫 No Bookings Found!</h2>
+				<p style="font-size: 18px; color: #555;">
+				  You haven't made any bookings yet. Explore our packages and plan your next trip!
+				</p>
+			  </div>
+			{% endif %}
+		  </div>
+	  
+		</div>
+	  </section>
+	  
 
 
     <section class="ftco-section bg-light" id="blog-section">
@@ -663,7 +674,7 @@
         <div class="row mb-5"  style="width:100%;">
           <div class="col-md">
             <div class="ftco-footer-widget mb-4">
-              <h2 class="ftco-heading-2">About <span><a href="index.html">Paradise Gateway</a></span></h2>
+              <h2 class="ftco-heading-2">About <span><a href="">Paradise Found</a></span></h2>
               <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
               <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
                 <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>

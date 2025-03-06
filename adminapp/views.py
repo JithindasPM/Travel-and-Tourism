@@ -11,6 +11,7 @@ from frontend.models import Package
 from frontend.models import User
 from frontend.models import User_Details
 from frontend.models import Hotel
+from frontend.models import Booking
 
 from adminapp.forms import State_Form
 from adminapp.forms import Destination_Form
@@ -20,21 +21,57 @@ from adminapp.forms import Hotel_Form
 
 # Create your views here.
 
-class Admin_Dashboard_View(View):
-    def get(self,request,*args,**kwargs):
-        id=request.user.id
-        # Get hotels created by the logged-in admin
-        admin_hotels = Package.objects.filter(user=id)
-        # Get bookings for those hotels
-        admin_bookings = User_Details.objects.filter(package__in=admin_hotels).order_by('-id')
-        # totel_revenue=admin_bookings
-        total_amount = admin_bookings.aggregate(total_amount=Sum('package__amount'))['total_amount']
-        total_booking=admin_bookings.count()
-        destinations = admin_bookings.values('package').distinct().count()
-        users = admin_bookings.values('U_Name').distinct().count()
-        return render(request,'admin.html',{'admin_bookings':admin_bookings,'total_booking':total_booking,'total_amount':total_amount,'users':users,'destinations':destinations})
+# class Admin_Dashboard_View(View):
+#     def get(self,request,*args,**kwargs):
+#         id=request.user.id
+#         # Get hotels created by the logged-in admin
+#         admin_hotels = Package.objects.filter(user=id)
+#         # Get bookings for those hotels
+#         admin_bookings = User_Details.objects.filter(package__in=admin_hotels).order_by('-id')
+#         # totel_revenue=admin_bookings
+#         total_amount = admin_bookings.aggregate(total_amount=Sum('package__amount'))['total_amount']
+#         total_booking=admin_bookings.count()
+#         destinations = admin_bookings.values('package').distinct().count()
+#         users = admin_bookings.values('U_Name').distinct().count()
+#         return render(request,'admin.html',{'admin_bookings':admin_bookings,'total_booking':total_booking,'total_amount':total_amount,'users':users,'destinations':destinations})
 
-# Booking.objects.create(hotel=hotel_obj, user=request.user)
+class DeleteAllBookingsView(View):
+    def get(self, request, *args, **kwargs):
+        Booking.objects.all().delete()
+        return redirect('Homepage') 
+
+from django.db.models import Sum
+
+class Admin_Dashboard_View(View):
+    def get(self, request, *args, **kwargs):
+        id = request.user.id
+
+        # Get packages created by this admin
+        admin_packages = Package.objects.filter(user=id)
+
+        # Get bookings related to these packages
+        admin_bookings = Booking.objects.filter(package__in=admin_packages).order_by('-id')
+
+        # Total booking count
+        total_booking = admin_bookings.count()
+
+        # Unique destinations from the packages booked
+        destinations = admin_bookings.values('package').distinct().count()
+
+        # Unique users who booked
+        users = admin_bookings.values('user').distinct().count()
+
+        # Total revenue from the 'total_amount' field in the Booking model
+        total_amount = admin_bookings.aggregate(total_amount=Sum('total_amount'))['total_amount'] or 0
+
+        return render(request, 'admin.html', {
+            'admin_bookings': admin_bookings,
+            'total_booking': total_booking,
+            'total_amount': total_amount,
+            'users': users,
+            'destinations': destinations
+        })
+
 
 class State_Add_View(View):
     def get(self,request,*args,**kwargs):

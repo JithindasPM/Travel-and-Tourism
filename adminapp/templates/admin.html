@@ -226,7 +226,7 @@
         <div class="sidebar">
             <div class="sidebar-header">
                 <a class="menu-a" href="{% url 'Homepage' %}">
-                    <h2>Paradise Gateway</h2>
+                    <h2>Paradise Found</h2>
                 </a>
             </div>
             <div class="sidebar-menu">
@@ -330,10 +330,10 @@
                     </thead>
                     {% for i in admin_bookings %}
                         <tr>
-                            <td>{{i.U_Name}}</td>
-                            <td>{{i.package}}</td>
-                            <td>{{i.date}}</td>
-                            <td>{{i.package.amount}}</td>
+                            <td>{{ i.user_deatil.U_Name }}</td>
+                    <td>{{ i.package }}</td>
+                    <td>{{ i.user_deatil.date }}</td>
+                    <td>{{ i.total_amount }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

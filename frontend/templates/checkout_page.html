@@ -119,17 +119,29 @@
 								</div>
 							</div>
 							<div class="w-100"></div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="travel_way">Travel Way</label>
+									<select name="travel_way" class="form-select" id="travel_way">
+										<option value="">Select Travel Way</option>
+										<option value="Car">Car</option>
+										<option value="Bike">Bike</option>
+									</select>
+								</div>
+							</div>
+							
 						</div>
 
+						
 
-						<script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_IzIBFTmzd3zzKk"
+						{% comment %} <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="rzp_test_IzIBFTmzd3zzKk"
 							data-amount="{{ calculated_amount }}" data-currency="INR" data-name="Tour Package"
 							data-buttontext="Pay with Razorpay"
 							data-description="A Wild Sheep Chase is the third novel by Japanese author Haruki Murakami"
 							data-image="https://example.com/your_logo.jpg" data-prefill.name="Gaurav Kumar"
 							data-prefill.email="gaurav.kumar@example.com" data-theme.color="blue"
 							data-payment-methods="card,upi,emi,netbanking,wallet">
-							</script>
+							</script>  {% endcomment %}
 
 				</div>
 				<div class="col-xl-5">
@@ -150,14 +162,16 @@
 								<hr>
 
 								<p class="d-flex total-price">
-									<span>Total</span>Rs {{pkg.amount}}</span>
+									<span>Total</span>Rs <span id="total_amount">{{ pkg.amount }}</span>
 								</p>
+								
 
 							</div>
 						</div>
 						<div class="col-md-12">
 						</div>
 					</div>
+					<button type="submit" id="pay_now" class="btn btn-primary mt-3">Pay Now</button>
 				</form>
 				</div> <!-- .col-md-8 -->
 			</div>
@@ -172,6 +186,7 @@
 	</div>
 	</footer>
 
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
 	<!-- loader -->
@@ -180,7 +195,55 @@
 			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
 				stroke="#F96D00" />
 		</svg></div>
-
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const travelWaySelect = document.getElementById("travel_way");
+				const totalAmountSpan = document.getElementById("total_amount");
+				const payNowButton = document.getElementById("pay_now");
+			
+				const originalAmount = {{ pkg.amount }};
+				let updatedAmount = originalAmount;
+			
+				travelWaySelect.addEventListener("change", function () {
+					if (this.value === "Car") {
+						updatedAmount = originalAmount + 1499;
+					} else if (this.value === "Bike") {
+						updatedAmount = originalAmount + 799;
+					} else {
+						updatedAmount = originalAmount;
+					}
+					totalAmountSpan.textContent = updatedAmount;
+				});
+			
+				payNowButton.addEventListener("click", function (e) {
+					e.preventDefault();
+			
+					var options = {
+						"key": "rzp_test_IzIBFTmzd3zzKk",  // Your Razorpay test key
+						"amount": updatedAmount * 100, // Amount in paise
+						"currency": "INR",
+						"name": "Tour Package",
+						"description": "Payment for tour booking",
+						"image": "https://example.com/your_logo.jpg", // Optional: Your logo URL
+						"handler": function (response) {
+							document.querySelector(".billing-form").submit();
+						},
+						"prefill": {
+							"name": document.querySelector("input[name='name']").value,
+							"email": document.querySelector("input[name='email']").value,
+							"contact": document.querySelector("input[name='phone']").value
+						},
+						"theme": {
+							"color": "#3399cc"
+						}
+					};
+					var rzp = new Razorpay(options);
+					rzp.open();
+				});
+			});
+			
+			</script>
+			
 
 	<script src="{% static 'home/js/jquery.min.js' %}"></script>
 	<script src="{% static 'home/js/jquery-migrate-3.0.1.min.js' %}"></script>

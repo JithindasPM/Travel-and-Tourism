@@ -17,6 +17,7 @@ from adminapp.views import Hotel_Add_View
 from adminapp.views import Hotel_Update_View
 from adminapp.views import Hotel_Delete_View
 from adminapp.views import Hotel_Details_View
+from adminapp.views import DeleteAllBookingsView
 
 
 
@@ -38,6 +39,6 @@ urlpatterns=[
     path('hotel_update/<int:pk>',Hotel_Update_View.as_view(),name="hotel_update"),
     path('hotel_delete/<int:pk>',Hotel_Delete_View.as_view(),name="hotel_delete"),
     path('hotel_details/<int:pk>',Hotel_Details_View.as_view(),name="hotel_details"),
-    
+    path('delete-all-bookings/', DeleteAllBookingsView.as_view(), name='delete_all_bookings'),
 
 ]

@@ -47,15 +47,13 @@ class Hotel(models.Model):
     def __str__(self):
         return self.hotel_name
 
-class Booking(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
-    hotel=models.ForeignKey(Hotel,on_delete=models.CASCADE,null=True,blank=True)
-
-    def __str__(self):
-        return self.user.username
 
 
 class User_Details(models.Model):
+    TRAVEL_CHOICES = (
+        ('Car', 'Car'),
+        ('Bike', 'Bike'),
+    )
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True,related_name='bookings')
     package = models.ForeignKey(Package,on_delete=models.CASCADE,null=True,blank=True)
     hotel = models.ForeignKey(Hotel,on_delete=models.CASCADE,null=True,blank=True)
@@ -66,9 +64,26 @@ class User_Details(models.Model):
     U_Phone = models.CharField(max_length=50,null=True,blank=True)
     U_Email = models.EmailField(max_length=50,null=True,blank=True)
     date=models.CharField(max_length=10,null=True)
+    travel_way = models.CharField(
+        max_length=10,
+        choices=TRAVEL_CHOICES,
+        null=True,
+        blank=True
+    )
 
     def __str__(self):
         return self.U_Name
+    
+class Booking(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    hotel=models.ForeignKey(Hotel,on_delete=models.CASCADE,null=True,blank=True)
+    total_amount=models.IntegerField(null=True,blank=True)
+    package=models.ForeignKey(Package,on_delete=models.CASCADE,null=True,blank=True)
+    updated_date=models.DateTimeField(auto_now=True,null=True,blank=True)
+    user_deatil=models.ForeignKey(User_Details,on_delete=models.CASCADE,null=True,blank=True)
+
+    def __str__(self):
+        return self.user.username
 
 class Feedback(models.Model):
     Name= models.CharField(max_length=50,null=True,blank=True)
