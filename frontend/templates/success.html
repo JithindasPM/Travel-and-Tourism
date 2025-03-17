@@ -1,57 +1,153 @@
 {% load static %}
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description"
-        content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+    <meta name="description" content="Responsive Tour Package Invoice Template">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- title -->
-    <title>Adventure</title>
-
-    <!-- favicon -->
-    <link rel="shortcut icon" type="image/png" href="{% static 'load/assets/img/favicon.png' %}">
-    <!-- google font -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-    <!-- fontawesome -->
-
-
-    <link rel="stylesheet" href="{% static 'css/open-iconic-bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
-    <link rel="stylesheet" href="{% static 'css/magnific-popup.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/aos.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
-
-    <link rel="stylesheet" href="{% static 'css/bootstrap-datepicker.css' %}">
-    <link rel="stylesheet" href="{% static 'css/jquery.timepicker.css' %}">
-
-
-    <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
-    <link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <title>Adventure - Tour Invoice</title>
+
     <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .invoice-container {
+            max-width: 1000px;
+            margin: 80px auto;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .invoice-header {
+            background: linear-gradient(135deg, #F28123, #ff9642);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .invoice-header h2 {
+            margin-bottom: 0;
+            font-weight: 700;
+        }
+
+        .invoice-body {
+            padding: 35px;
+            background-color: white;
+        }
+
+        .customer-details {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #F28123;
+        }
+
+        .detail-item {
+            margin-bottom: 5px;
+        }
+
+        .detail-item span {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .detail-item p {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #1639d3, #3455e6);
+            color: white;
+        }
+
+        .table-header th {
+            padding: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+
+        .invoice-table {
+            border-radius: 10px;
+            overflow: hidden;
+            border: none;
+        }
+
+        .invoice-table td {
+            padding: 15px;
+            vertical-align: middle;
+        }
+
+        .package-image {
+            max-height: 100px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .thank-you {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff8ee;
+            border-radius: 10px;
+        }
+
+        .thank-you p {
+            color: #F28123;
+            font-size: 1.3em;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .btn-primary {
+            background-color: #1639d3;
+            border-color: #1639d3;
+        }
+
+        .btn-warning {
+            background-color: #F28123;
+            border-color: #F28123;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-warning:hover {
+            background-color: #e47310;
+            transform: translateY(-2px);
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
         .alert-container {
             position: fixed;
             top: -100px;
-            /* Initially off-screen */
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
             width: 100%;
             max-width: 400px;
-            /* Adjust width as needed */
             text-align: center;
             animation: slideDown 0.5s forwards;
         }
@@ -59,12 +155,9 @@
         @keyframes slideDown {
             0% {
                 top: -100px;
-                /* Off-screen */
             }
-
             100% {
                 top: 100px;
-                /* 100px down from top */
             }
         }
 
@@ -72,19 +165,27 @@
             position: relative;
             margin-bottom: 15px;
             border: 1px solid transparent;
-            border-radius: .25rem;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .alert img {
+            margin-right: 10px;
         }
 
         .alert-success {
-            color: black;
+            color: #155724;
             background-color: white;
-            border: 1px solid green !important;
+            border: 1px solid #28a745 !important;
             font-size: 15px;
             font-weight: bold;
         }
 
         .alert-warning {
-            color: black;
+            color: #856404;
             background-color: white;
             border: 1px solid #F28123 !important;
             font-size: 15px;
@@ -92,7 +193,7 @@
         }
 
         .alert-error {
-            color: black;
+            color: #721c24;
             background-color: white;
             border: 1px solid #F28123 !important;
             font-size: 15px;
@@ -100,119 +201,181 @@
         }
 
         .alert-info {
-            color: black;
+            color: #0c5460;
             background-color: white;
-            border: 1px solid blue !important;
+            border: 1px solid #17a2b8 !important;
             font-size: 15px;
             font-weight: bold;
+        }
+
+        .price {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #F28123;
+        }
+
+        .booking-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .booking-info-item {
+            text-align: center;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .booking-info-item h5 {
+            margin: 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .booking-info-item p {
+            margin: 5px 0 0;
+            font-weight: 700;
+            font-size: 1.1em;
+            color: #333;
+        }
+
+        .brand-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .brand-logo span {
+            font-size: 2em;
+            color: #F28123;
+            margin-right: 10px;
+        }
+
+        .brand-logo h3 {
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .spot-name {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #1639d3;
         }
     </style>
 </head>
 
 <body>
-    <br><br><br>
-    <div class="container ">
-        <div class="card mt-5 pt-1">
-            <div class="card-body">
-                <div class="container mb-5 mt-3">
-                    <div class="row d-flex align-items-baseline">
-                        <div class="col-xl-9">
-                            <a href="{% url 'Homepage' %}">
-                                <button class="btn btn-warning ml-left">Home</button>
-                            </a>
+    <div class="container invoice-container">
+        <div class="invoice-header">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Tour Package Invoice</h2>
+                    <p>Your adventure awaits!</p>
+                </div>
+                <div class="col-md-6 text-right">
+                    <span class="bi bi-compass" style="font-size: 3em;"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="invoice-body">
+            <div class="action-buttons">
+                <a href="{% url 'Homepage' %}">
+                    <button class="btn btn-warning">
+                        <i class="bi bi-house-door"></i> Back to Home
+                    </button>
+                </a>
+                <button class="btn btn-warning" id="printInvoice">
+                    <i class="bi bi-printer"></i> Print Invoice
+                </button>
+            </div>
+
+            <div class="brand-logo">
+                <!-- <span class="bi bi-compass-fill"></span> -->
+                <h3 class="mt-0">Adventure Tours</h3>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="customer-details">
+                        <h4>Customer Information</h4>
+                        <div class="detail-item">
+                            <span>Name:</span>
+                            <p>{{ detail.U_Name }}</p>
                         </div>
-                        <hr>
-                        <div>
-
-
-                            <button class="btn btn-warning ml-left" id="printInvoice">Print</button>
+                        <div class="detail-item">
+                            <span>Email:</span>
+                            <p>{{ detail.U_Email }}</p>
                         </div>
-                    </div>
-                    <br><br>
-
-                    <div class="container">
-                        <div class="col-md-12">
-                            <div class="text-center">
-                                <i class="fab fa-mdb fa-4x ms-0" style="color:#5d9fc5 ;"></i>
-                                <p class="pt-0">
-                                <h3><span style="color: rgb(21, 16, 7); font-weight: bold"> Tour Package Invoice</span>
-                                </h3>
-                                </p>
-                            </div>
+                        <div class="detail-item">
+                            <span>Phone:</span>
+                            <p>{{ detail.U_Phone }}</p>
                         </div>
-
-                        <div class="row">
-                            <div class="col-xl-8">
-                                <ul class="list-unstyled">
-
-                                    <li class="text-muted">
-                                        <h4>Name: {{ detail.U_Name }}</h4>
-                                    </li>
-                                    <li class="text-muted">
-                                        <h4>State: {{ detail.U_State }}</h4>
-                                    </li>
-                                    <li class="text-muted">
-                                        <h4>Street: {{ detail.U_Street }}</h4>
-                                    </li>
-                                    <li class="text-muted">
-                                        <h4>Town: {{ detail.U_Town }}</h4>
-                                    </li>
-                                    <li class="text-muted">
-                                        <h4>Phone: {{ detail.U_Phone}}</h4>
-                                    </li>
-                                    <li class="text-muted">
-                                        <h4>Email: {{ detail.U_Email}}</h4>
-                                    </li>
-                                    <li class="text-muted">
-                                        <h4>SPOT: {{ detail.package.spot}}</h4>
-                                    </li>
-
-                                </ul>
-                            </div>
+                        <div class="detail-item">
+                            <span>Address:</span>
+                            <p>{{ detail.U_Street }}, {{ detail.U_Town }}, {{ detail.U_State }}</p>
                         </div>
                     </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <table class="table table-striped table-borderless " style="text-align: center;">
-                                    <thead style="background-color: #1639d3;" class="text-white">
-                                        <tr>
-                                            <th>Spot</th>
-                                            <th>Image</th>
-                                            <th>Booking Date</th>
-                                            <th>Duration</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="text-center ">
-                                            <td style="text-align: center; padding-left: 55px;">{{ spot }}</td>
-                                            <td>
-                                                <img src="{{ detail.package.Image.url }}"
-                                                    style="max-height: 100px; max-width: 100px;padding-left: 35px;"
-                                                    alt="Place Image" />
-                                            </td>
-                                            <td style="text-align: center;padding-left: 55px;">{{ detail.date }}</td>
-                                            <td style="padding-left: 50px;">{{ detail.package.duration }}</td>
-                                            <td>₹ {{ booking.total_amount }}</td>
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="booking-info">
+                        <div class="booking-info-item">
+                            <h5>Booking Date</h5>
+                            <p>{{ detail.date }}</p>
+                        </div>
+                        <div class="booking-info-item">
+                            <h5>Duration</h5>
+                            <p>{{ detail.package.duration }}</p>
                         </div>
                     </div>
-
-                    <hr>
-                    <div class="row">
-                        <div class="col-xl-12 justify-content-center d-flex">
-                            <p><span style="color: orange; font-weight: bold">Thank you for Booking.</span></p>
+                    <div class="customer-details">
+                        <h4>Tour Details</h4>
+                        <div class="detail-item">
+                            <span>Destination:</span>
+                            <p class="spot-name">{{ detail.package.spot }}</p>
+                        </div>
+                        <div class="detail-item">
+                            <span>Total Amount:</span>
+                            <p class="price">₹ {{ booking.total_amount }}</p>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="table-responsive mt-1">
+                <table class="table invoice-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th>Destination</th>
+                            <th>Package Image</th>
+                            <th>Travel Date</th>
+                            <th>Package Duration</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ spot }}</td>
+                            <td>
+                                <img src="{{ detail.package.Image.url }}" class="package-image" alt="Package Image" />
+                            </td>
+                            <td>{{ detail.date }}</td>
+                            <td>{{ detail.package.duration }}</td>
+                            <td class="price">₹ {{ booking.total_amount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="thank-you">
+                <i class="bi bi-heart-fill text-warning mb-3" style="font-size: 1.5em;"></i>
+                <p>Thank you for booking with Adventure Tours!</p>
+                <small>We hope you enjoy your journey</small>
+            </div>
         </div>
-    </div>
     </div>
 
     <div class="alert-container">
@@ -220,33 +383,26 @@
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">
             {% if message.tags == 'error' %}
-            <img src="{% static 'Web/assets/img/error.png' %}" alt="Error Icon" style="margin-right:10px;" width="27px"
-                height="27px"> <!-- Replace path/to/error-image.jpg with the path to your error image -->
+            <img src="{% static 'Web/assets/img/error.png' %}" alt="Error Icon" width="27px" height="27px">
             {{ message }}
-
             {% endif %}
             {% if message.tags == 'success' %}
-            <img src="{% static 'Web/assets/img/green_tick.jpg' %}" alt="Error Icon" width="35px" height="33px">
+            <img src="{% static 'Web/assets/img/green_tick.jpg' %}" alt="Success Icon" width="35px" height="33px">
             {{ message }}
-
             {% endif %}
             {% if message.tags == 'warning' %}
-            <img src="{% static 'Web/assets/img/warningicon.png' %}" style="margin-top:-7px !important;"
-                alt="Error Icon" width="30px" height="28px">
+            <img src="{% static 'Web/assets/img/warningicon.png' %}" alt="Warning Icon" width="30px" height="28px">
             {{ message }}
-
             {% endif %}
             {% if message.tags == 'info' %}
-            <img src="{% static 'Web/assets/img/info-icon.webp' %}" style="margin-right:7px !important;"
-                alt="Error Icon" width="28px" height="32px">
+            <img src="{% static 'Web/assets/img/info-icon.webp' %}" alt="Info Icon" width="28px" height="32px">
             {{ message }}
-
             {% endif %}
         </div>
         {% endfor %}
         {% endif %}
     </div>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
     <script>
         $(document).ready(function () {
             // Hide alerts after 5 seconds
@@ -254,34 +410,11 @@
                 $('.alert-container').fadeOut('medium');
             }, 5000);
         });
-    </script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script>
         document.getElementById("printInvoice").addEventListener("click", function () {
             window.print();
         });
     </script>
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/jquery-migrate-3.0.1.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
-    <script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
-    <script src="{% static 'js/jquery.stellar.min.js' %}"></script>
-    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
-    <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
-    <script src="{% static 'js/aos.js' %}"></script>
-    <script src="{% static 'js/jquery.animateNumber.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
-    <script src="{% static 'js/jquery.timepicker.min.js' %}"></script>
-    <script src="{% static 'js/scrollax.min.js' %}"></script>
-    <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-    <script src="{% static 'js/google-map.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
-
-
 </body>
 
 </html>

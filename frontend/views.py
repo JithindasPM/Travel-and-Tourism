@@ -92,6 +92,28 @@ def Checkout_page(request, p_id):
 
     return render(request, "checkout_page.html", {'pkg': pkg, 'calculated_amount': calculated_amount, 'hotels': hotel})
 
+# class RegistrationView(FormView):
+#     def get(self, request, *args, **kwargs):
+#         form = RegistrationForm()
+#         return render(request, 'Signup.html', {"form": form})
+
+#     def post(self, request, *args, **kwargs):
+#         form = RegistrationForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request,"registration successfully")
+#             return redirect('login')
+#         messages.error(request,"Please enter correct details")
+#         return render(request, 'Signup.html', {"form": form})
+
+from django.core.mail import send_mail
+from django.conf import settings
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.views.generic.edit import FormView
+from .forms import RegistrationForm
+from django.contrib.auth.models import User
+
 class RegistrationView(FormView):
     def get(self, request, *args, **kwargs):
         form = RegistrationForm()
@@ -100,11 +122,41 @@ class RegistrationView(FormView):
     def post(self, request, *args, **kwargs):
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request,"registration successfully")
+            # Save the user after the form is validated
+            user = form.save()
+
+            # Send a confirmation email
+            self.send_confirmation_email(user)
+
+            # Show success message
+            messages.success(request, "Registration successful.")
             return redirect('login')
-        messages.error(request,"Please enter correct details")
+        
+        # Show error message if form is not valid
+        messages.error(request, "Please enter correct details.")
         return render(request, 'Signup.html', {"form": form})
+
+    def send_confirmation_email(self, user):
+        subject = 'Registration Successful - Welcome to Paradise Found'
+        message = f"""
+        Dear {user.username},
+
+        Welcome to Paradise Found!
+
+        Thank you for registering with us. We are excited to have you on board. 
+        You can now log in and start exploring all the amazing features we offer.
+
+        If you have any questions or need assistance, feel free to reach out to our support team.
+
+        Best regards,
+        The Paradise Found Team
+        """
+        from_email = settings.EMAIL_HOST_USER  # Use the email defined in your settings
+        recipient_list = [user.email]
+
+        # Send plain-text email
+        send_mail(subject, message, from_email, recipient_list)
+
   
 
 class SignInView(View):
