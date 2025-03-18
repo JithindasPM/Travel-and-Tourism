@@ -63,6 +63,7 @@ class User_Details(models.Model):
     U_Town = models.CharField(max_length = 50,null =True,blank= True)
     U_Phone = models.CharField(max_length=50,null=True,blank=True)
     U_Email = models.EmailField(max_length=50,null=True,blank=True)
+    U_Aadhar = models.FileField(upload_to='aadhar/', null=True, blank=True)
     date=models.CharField(max_length=10,null=True)
     travel_way = models.CharField(
         max_length=10,

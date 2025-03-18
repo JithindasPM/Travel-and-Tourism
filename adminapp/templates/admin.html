@@ -326,6 +326,7 @@
                             <th>Destination</th>
                             <th>Date</th>
                             <th>Amount</th>
+                            <th>Details</th>
                         </tr>
                     </thead>
                     {% for i in admin_bookings %}
@@ -334,6 +335,7 @@
                     <td>{{ i.package }}</td>
                     <td>{{ i.user_deatil.date }}</td>
                     <td>{{ i.total_amount }}</td>
+                    <td><a href="{% url 'user_details' i.id %}"><i class="bi bi-download"></i></a></td>
                         </tr>
                     {% endfor %}
                     </tbody>

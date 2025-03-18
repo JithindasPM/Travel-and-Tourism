@@ -21,19 +21,6 @@ from adminapp.forms import Hotel_Form
 
 # Create your views here.
 
-# class Admin_Dashboard_View(View):
-#     def get(self,request,*args,**kwargs):
-#         id=request.user.id
-#         # Get hotels created by the logged-in admin
-#         admin_hotels = Package.objects.filter(user=id)
-#         # Get bookings for those hotels
-#         admin_bookings = User_Details.objects.filter(package__in=admin_hotels).order_by('-id')
-#         # totel_revenue=admin_bookings
-#         total_amount = admin_bookings.aggregate(total_amount=Sum('package__amount'))['total_amount']
-#         total_booking=admin_bookings.count()
-#         destinations = admin_bookings.values('package').distinct().count()
-#         users = admin_bookings.values('U_Name').distinct().count()
-#         return render(request,'admin.html',{'admin_bookings':admin_bookings,'total_booking':total_booking,'total_amount':total_amount,'users':users,'destinations':destinations})
 
 class DeleteAllBookingsView(View):
     def get(self, request, *args, **kwargs):
@@ -250,4 +237,10 @@ class Hotel_Details_View(View):
         return render(request,'hotel_detail.html',{'data':data})
 
 
-    
+from frontend.models import Booking
+
+class User_Details_View(View):
+    def get(self, request, *args, **kwargs):
+        id = kwargs.get('pk')
+        data = Booking.objects.get(id=id)
+        return render(request, 'user_details.html', {'data': data})

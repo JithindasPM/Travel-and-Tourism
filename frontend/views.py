@@ -200,6 +200,7 @@ def User_details(request, pk):
         e = request.POST.get('email')
         d = request.POST.get('date')
         travel=request.POST.get('travel_way')
+        aadhar_file = request.FILES.get('aadhar')
         
 
         hotel_obj = Hotel.objects.get( id=pk)
@@ -215,7 +216,8 @@ def User_details(request, pk):
             date=d,
             user=request.user,
             hotel=hotel_obj,
-            travel_way=travel
+            travel_way=travel,
+            U_Aadhar=aadhar_file
         )
         obj.save()
 
