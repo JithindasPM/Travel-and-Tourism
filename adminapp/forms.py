@@ -49,7 +49,7 @@ class Package_Form(forms.ModelForm):
         fields=['destination','spot','description','duration','amount','Image','Image1']
 
 class Admin_Registration_Form(UserCreationForm):
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control", "placeholder": "Enter your password"}))
     # password2 = forms.CharField(widget=forms.PasswordInput(attrs={"class": "form-control"}))
 
     class Meta:
@@ -57,8 +57,8 @@ class Admin_Registration_Form(UserCreationForm):
         fields = ['username', 'email'] 
 
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter your username'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Enter your email'}),
         }
 
 class Hotel_Form(forms.ModelForm):

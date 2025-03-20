@@ -47,6 +47,12 @@
 	</div>
 
 	<section class="ftco-section">
+		{% if messages %}
+    	{% for message in messages %}
+        <div class="alert alert-danger">{{ message }}</div>
+    	{% endfor %}
+		{% endif %}
+
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-xl-7 ftco-animate">
@@ -129,7 +135,7 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="aadhar">Upload Aadhar Card</label>
-									<input type="file" class="form-control" name="aadhar">
+									<input type="file" class="form-control" name="aadhar" required>
 								</div>
 							</div>
 							
@@ -189,17 +195,52 @@
 		</svg></div>
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
+				// Date min value setting
 				let today = new Date().toISOString().split("T")[0];
 				document.getElementById("date").setAttribute("min", today);
-			});
-			document.addEventListener("DOMContentLoaded", function () {
+			
+				// Form elements
+				const billingForm = document.querySelector(".billing-form");
+				const requiredInputs = billingForm.querySelectorAll("input[name='name'], input[name='street'], input[name='town'], input[name='date'], input[name='phone'], input[name='email'], input[name='aadhar']");
 				const travelWaySelect = document.getElementById("travel_way");
 				const totalAmountSpan = document.getElementById("total_amount");
 				const payNowButton = document.getElementById("pay_now");
-			
-				const originalAmount = {{ pkg.amount }};
+				
+				// Original pricing logic
+				const originalAmount = parseFloat(totalAmountSpan.textContent);
 				let updatedAmount = originalAmount;
-			
+				
+				// Function to validate form
+				function validateForm() {
+					let isValid = true;
+					let errorMessage = "";
+					
+					requiredInputs.forEach(input => {
+						if (!input.value.trim()) {
+							isValid = false;
+							input.classList.add("is-invalid");
+							
+							// Get field label for error message
+							const fieldLabel = input.closest('.form-group').querySelector('label').textContent;
+							errorMessage += fieldLabel + " is required. ";
+						} else {
+							input.classList.remove("is-invalid");
+						}
+					});
+					
+					return { isValid, errorMessage };
+				}
+				
+				// Add input event listeners to remove error styling when user types
+				requiredInputs.forEach(input => {
+					input.addEventListener("input", function() {
+						if (this.value.trim()) {
+							this.classList.remove("is-invalid");
+						}
+					});
+				});
+				
+				// Travel way pricing logic
 				travelWaySelect.addEventListener("change", function () {
 					if (this.value === "Car") {
 						updatedAmount = originalAmount + 1499;
@@ -210,19 +251,42 @@
 					}
 					totalAmountSpan.textContent = updatedAmount;
 				});
-			
+				
+				// Payment button handler
 				payNowButton.addEventListener("click", function (e) {
 					e.preventDefault();
-			
+					
+					// Validate form
+					const { isValid, errorMessage } = validateForm();
+					
+					if (!isValid) {
+						// Create error message element
+						const alertDiv = document.createElement("div");
+						alertDiv.className = "alert alert-danger mt-3";
+						alertDiv.textContent = "Please fill in all required fields: " + errorMessage;
+						
+						// Remove any existing alerts
+						const existingAlerts = billingForm.querySelectorAll(".alert");
+						existingAlerts.forEach(alert => alert.remove());
+						
+						// Add alert before the form
+						billingForm.prepend(alertDiv);
+						
+						// Scroll to the top of the form
+						billingForm.scrollIntoView({ behavior: "smooth" });
+						return;
+					}
+					
+					// If form is valid, proceed with payment
 					var options = {
-						"key": "rzp_test_IzIBFTmzd3zzKk",  // Your Razorpay test key
-						"amount": updatedAmount * 100, // Amount in paise
+						"key": "rzp_test_IzIBFTmzd3zzKk",
+						"amount": updatedAmount * 100,
 						"currency": "INR",
 						"name": "Tour Package",
 						"description": "Payment for tour booking",
-						"image": "https://example.com/your_logo.jpg", // Optional: Your logo URL
+						"image": "https://example.com/your_logo.jpg",
 						"handler": function (response) {
-							document.querySelector(".billing-form").submit();
+							billingForm.submit();
 						},
 						"prefill": {
 							"name": document.querySelector("input[name='name']").value,

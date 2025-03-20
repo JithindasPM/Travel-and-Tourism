@@ -310,6 +310,12 @@
                         <span class="menu-text">Hotels</span>
                     </div>
                 </a>
+                <a class="menu-a" href="{% url 'logout' %}">
+                    <div class="menu-item">
+                        <i class="bi bi-arrow-down-left-circle"></i>
+                        <span class="menu-text">Logout</span>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -317,7 +323,7 @@
         <div class="main-content">
             <div class="header">
                 <h1 class=" text-primary fw-bold text-center"> Travel Packages</h1>
-            </h1>
+                </h1>
 
             </div>
 
@@ -376,6 +382,7 @@
                 </div>
 
                 <div class="table-container mt-4">
+                    {% if datas %}
                     <table class="table">
                         <thead>
                             <tr>
@@ -388,6 +395,7 @@
                             </tr>
                         </thead>
                         <tbody>
+
                             {% for i in datas %}
                             <tr>
                                 <td>{{ i.spot }}</td>
@@ -402,8 +410,12 @@
                                 </td>
                             </tr>
                             {% endfor %}
+
                         </tbody>
                     </table>
+                    {% else %}
+                    <p>No packages added</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

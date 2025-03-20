@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,40 +12,17 @@
             border-width: 2px;
         }
 
-        .btn-facebook {
-            background: #405D9D;
-            border: none;
-        }
-
-        .btn-facebook:hover, .btn-facebook:focus {
-            background: #314879;
-        }
-
-        .btn-twitter {
-            background: #42AEEC;
-            border: none;
-        }
-
-        .btn-twitter:hover, .btn-twitter:focus {
-            background: #1799e4;
-        }
-
         /* FOR DEMO PURPOSES */
         body {
             min-height: 100vh;
-        }
-
-        .form-control:not(select) {
-            padding: 1.5rem 0.5rem;
-        }
-
-        select.form-control {
-            height: 52px;
-            padding-left: 0.5rem;
+            background-color: aqua;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+            url('https://wallpapercat.com/w/full/f/2/c/144426-1920x1200-desktop-hd-beach-background-image.jpg');
+            background-position: center;
+            background-size: cover;
         }
 
         .form-control::placeholder {
-            color: #ccc;
             font-weight: bold;
             font-size: 0.9rem;
         }
@@ -61,6 +37,23 @@
         .form-a{
             text-decoration: none;
         }
+        .form-a:hover{
+            text-shadow: 0 0 1px;
+            color: rgb(0, 145, 255);
+        }
+        .fom{
+            backdrop-filter: blur(3px);
+            color: white;
+        }
+        .btn1{
+            color: white;
+            background-color: rgba(255, 255, 255, 0.134);
+        }
+        .btn1:hover{
+            background-color: rgba(0, 0, 0, 0.205);
+            border: 1px solid rgba(255, 255, 255, 0.43);
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -72,32 +65,43 @@
     </nav>
 </header>
 
-<div class="container">
-    <div class="row py-2 align-items-center">
+<div class="container home">
+    <div class="row py-2 align-items-center mt-5">
         <div class="col-md-5 pr-lg-5 mb-5 mb-md-0">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid"
-                  alt="Phone image">
-            <h1>Create an Account</h1>
+                <!-- <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="img-fluid"
+                  alt="Phone image"> -->
+            <!-- <h1>Create an Account</h1> -->
         </div>
 
         <div class="col-md-7 col-lg-6 ml-auto">
-            <form action="" method="post" class=" p-5 border border-3 rounded-5 shadow border-white text-secondary" style="background-color: rgba(255, 255, 255, 0.7);">
+            <form action="" method="post" class=" p-5 border border-3 rounded-5 shadow border-white fom">
+                <h2 class="mb-4">Registration for hotel managers</h2>
                 {%csrf_token%}
                 {{form.as_p}}
-                <button class="btn btn-outline-primary" type="submit">register</button>
+                <button class="btn btn1" type="submit">Register</button>
             </form>
+            <div class="text-center w-100 d-flex justify-content-between mt-3">
+                <p class="text-white font-weight-bold">Already Registered? <a class="form-a" href="{% url 'login' %}" class="text-primary ml-2"><b>Login</b></a></p>
+                <a href="{% url 'Signup' %}" class="btn btn1">
+                    <b>Register as User</b>
+                </a>
+            </div>
         </div>
         <div class="form-group col-lg-12 mx-auto">
-            <a href="{% url 'Signup' %}" class="btn btn-primary btn-block py-2 btn-facebook">
+            <!-- <a href="{% url 'admin_registration' %}" class="btn btn-primary btn-block py-2 btn-facebook">
                 <i class="fa fa-facebook-f mr-2"></i>
-                <span class="font-weight-bold">Register as User</span>
-            </a>
+                <span class="font-weight-bold">Register as Hotel Manager</span>
+            </a> -->
         </div>
 
         <!-- Already Registered -->
-        <div class="text-center w-100">
+        <!-- <div class="text-center w-100 d-flex justify-content-between">
             <p class="text-muted font-weight-bold">Already Registered? <a class="form-a" href="{% url 'login' %}" class="text-primary ml-2">Login</a></p>
-        </div>
+            <a href="{% url 'admin_registration' %}" class="btn btn-primary btn-block py-2 btn-facebook">
+                <i class="fa fa-facebook-f mr-2"></i>
+                <span class="font-weight-bold">Register as Hotel Manager</span>
+            </a>
+        </div> -->
     </div>
 </div>
 

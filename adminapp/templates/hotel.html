@@ -234,6 +234,12 @@
                         <span class="menu-text">Hotels</span>
                     </div>
                 </a>
+                <a class="menu-a" href="{% url 'logout' %}">
+                    <div class="menu-item">
+                        <i class="bi bi-arrow-down-left-circle"></i>
+                        <span class="menu-text">Logout</span>
+                    </div>
+                </a>
             </div>
         </div>
 
@@ -316,6 +322,7 @@
                 </div>
 
                 <div class="table-container mt-4">
+                    {% if datas %}
                     <table class="table">
                         <thead>
                             <tr>
@@ -342,6 +349,9 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    {% else %}
+                    <p>No hotels added</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

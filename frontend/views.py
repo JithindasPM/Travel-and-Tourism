@@ -202,6 +202,12 @@ def User_details(request, pk):
         travel=request.POST.get('travel_way')
         aadhar_file = request.FILES.get('aadhar')
         
+        # if not aadhar_file or aadhar_file.size == 0:
+        #     messages.error(request, "Aadhar card is required. Please upload your Aadhar file.")
+        #     return redirect(request.META.get('HTTP_REFERER', 'your_default_page'))
+
+
+
 
         hotel_obj = Hotel.objects.get( id=pk)
         
